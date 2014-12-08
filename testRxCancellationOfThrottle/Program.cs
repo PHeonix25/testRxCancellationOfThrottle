@@ -18,7 +18,7 @@ namespace testRxCancellationOfThrottle
             ThrottleExperiment.Run();
 //            ConcatExperiment.Run();
 
-            _logger.Info("end");
+            _logger.Info("waiting for program exit...");
             Console.ReadKey();
         }
 
