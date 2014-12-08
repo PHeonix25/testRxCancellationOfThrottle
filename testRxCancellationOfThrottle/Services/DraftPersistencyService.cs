@@ -1,12 +1,14 @@
-﻿using System;
+﻿using NLog;
 
 namespace testRxCancellationOfThrottle.Services
 {
     internal class DraftPersistencyService : IDraftPersistencyService
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public void Store()
         {
-            Console.WriteLine("PERSISTENCY SERVICE: storing draft");
+            _logger.Info("storing draft");
         }
     }
 }

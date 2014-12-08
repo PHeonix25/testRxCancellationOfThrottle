@@ -1,5 +1,7 @@
 ﻿using System;
 
+using NLog;
+
 using testRxCancellationOfThrottle.Experiments;
 using testRxCancellationOfThrottle.Services;
 
@@ -7,10 +9,16 @@ namespace testRxCancellationOfThrottle
 {
     static class Program
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         static void Main()
         {
+            _logger.Info("startup");
+
             ThrottleExperiment.Run();
 //            ConcatExperiment.Run();
+
+            _logger.Info("end");
             Console.ReadKey();
         }
 

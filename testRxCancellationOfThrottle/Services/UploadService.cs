@@ -1,9 +1,13 @@
 using System;
 
+using NLog;
+
 namespace testRxCancellationOfThrottle.Services
 {
     internal class UploadService : IUploadService
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IDraftPersistencyService _persistencyService;
 
         public UploadService(IDraftPersistencyService persistencyService)
@@ -13,7 +17,7 @@ namespace testRxCancellationOfThrottle.Services
 
         public void UploadFile()
         {
-            Console.WriteLine("UPLOAD SERVICE     : uploading file, first saving the draft");
+            _logger.Info("uploading file, first saving the draft");
             _persistencyService.Store();
         }
     }

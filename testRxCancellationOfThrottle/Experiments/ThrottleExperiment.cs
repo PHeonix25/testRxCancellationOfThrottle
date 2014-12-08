@@ -3,12 +3,16 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 
+using NLog;
+
 using testRxCancellationOfThrottle.Services;
 
 namespace testRxCancellationOfThrottle.Experiments
 {
     internal class ThrottleExperiment : IExperiment
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IDraftPersistencyService _persistencyService;
         private readonly IUploadService _uploadService;
 
@@ -29,8 +33,8 @@ namespace testRxCancellationOfThrottle.Experiments
 
         private void SetupStreamHandlers(IObservable<string> draftChangesStream, IObservable<string> uploadChangesStream)
         {
-            draftChangesStream.Subscribe(Console.WriteLine);
-            uploadChangesStream.Subscribe(Console.WriteLine);
+            draftChangesStream.Subscribe(_logger.Info);
+            uploadChangesStream.Subscribe(_logger.Info);
 
             draftChangesStream.Throttle(TimeSpan.FromSeconds(5)).Amb(uploadChangesStream).Subscribe(_ => _persistencyService.Store());
             uploadChangesStream.Subscribe(_ => _uploadService.UploadFile());
