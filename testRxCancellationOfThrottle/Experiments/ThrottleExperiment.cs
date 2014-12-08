@@ -36,7 +36,7 @@ namespace testRxCancellationOfThrottle.Experiments
             draftChangesStream.Subscribe(_logger.Info);
             uploadChangesStream.Subscribe(_logger.Info);
 
-            draftChangesStream.Throttle(TimeSpan.FromSeconds(5)).Amb(uploadChangesStream).Subscribe(_ => _persistencyService.Store());
+            draftChangesStream.Throttle(TimeSpan.FromSeconds(5)).Subscribe(_ => _persistencyService.Store());
             uploadChangesStream.Subscribe(_ => _uploadService.UploadFile());
         }
 
